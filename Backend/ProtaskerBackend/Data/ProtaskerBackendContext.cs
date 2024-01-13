@@ -15,5 +15,7 @@ namespace ProtaskerBackend.Data
         }
 
         public DbSet<ProtaskerBackend.Models.Users> Users { get; set; } = default!;
+
+        public DbSet<ProtaskerBackend.Models.Tasks>? Tasks { get; set; }
     }
 }
