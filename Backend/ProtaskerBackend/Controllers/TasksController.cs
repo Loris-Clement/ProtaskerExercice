@@ -29,7 +29,7 @@ namespace ProtaskerBackend.Controllers
           {
               return NotFound();
           }
-            return await _context.Tasks.ToListAsync();
+            return await _context.Tasks.Include(task => task.User).ToListAsync();
         }
 
         // GET: api/Tasks/5
