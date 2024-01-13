@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ProtaskerBackend.Models
 {
@@ -12,6 +13,7 @@ namespace ProtaskerBackend.Models
         public string FirstName { get; set; }
 
         // Collection containing a user's tasks
+        [JsonIgnore]
         public ICollection<Tasks> Tasks { get; set; } = new List<Tasks>();
     }
 }
