@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ProtaskerBackend.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ProtaskerBackendContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProtaskerBackendContext") ?? throw new InvalidOperationException("Connection string 'ProtaskerBackendContext' not found.")));
 
 // Add services to the container.
 
