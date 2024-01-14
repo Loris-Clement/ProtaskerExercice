@@ -1,12 +1,33 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {PanelModule} from "primeng/panel";
+import { Task } from '../../models/Task';
+import {ButtonModule} from "primeng/button";
+import {TasksService} from "../../services/tasks.service";
 
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
-  imports: [],
+  imports: [
+    PanelModule,
+    ButtonModule
+  ],
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css'
 })
-export class TasksListComponent {
+export class TasksListComponent implements OnInit{
+  tasksList: Task[]=[];
 
+  constructor(private tasksService: TasksService) {
+  }
+  ngOnInit() {
+    this.getAllTasks();
+  }
+
+  editTask(id: number) {
+
+  }
+
+  getAllTasks() {
+
+  }
 }

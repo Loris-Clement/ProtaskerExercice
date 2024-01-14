@@ -1,0 +1,25 @@
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Libellé</th>
+                <th scope="col">Attribution</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (task of tasksList; track task.id) {
+                <tr>
+                    <td>{{task.text}}</td>
+                    <td>{{task.attributedUser}}</td>
+                    <td>{{task.status}}</td>
+                    <td>
+                        <button pButton icon="pi pi-pencil" class="p-button-success" (click)="editTask(task.id)"></button>
+                        <p-button></p-button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
