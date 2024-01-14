@@ -5,5 +5,5 @@ export interface Task {
   idUser: number;
   text: String;
   status: number;
-  attributedUser: User;
+  user: User;
 }

@@ -12,11 +12,11 @@
             @for (task of tasksList; track task.id) {
                 <tr>
                     <td>{{task.text}}</td>
-                    <td>{{task.attributedUser}}</td>
+                    <td>{{task.user.firstName}}</td>
                     <td>{{task.status}}</td>
                     <td>
                         <button pButton icon="pi pi-pencil" class="p-button-success" (click)="editTask(task.id)"></button>
-                        <p-button></p-button>
+                        
                     </td>
                 </tr>
             }

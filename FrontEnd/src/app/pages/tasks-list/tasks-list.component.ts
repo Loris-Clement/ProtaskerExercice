@@ -28,6 +28,14 @@ export class TasksListComponent implements OnInit{
   }
 
   getAllTasks() {
-
+    this.tasksService.getAllTask().subscribe({
+      next: response => {
+        this.tasksList = response;
+        console.log("Succès : ", response);
+      },
+      error: err => {
+        console.error("Erreur : ", err);
+      }
+    })
   }
 }
