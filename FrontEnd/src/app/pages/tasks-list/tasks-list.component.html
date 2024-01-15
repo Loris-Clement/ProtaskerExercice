@@ -1,25 +1,41 @@
 <div>
-    <table>
-        <thead>
-            <tr>
-                <th scope="col">Libellé</th>
-                <th scope="col">Attribution</th>
-                <th scope="col">Statut</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (task of tasksList; track task.id) {
-                <tr>
-                    <td>{{task.text}}</td>
-                    <td>{{task.user.firstName}}</td>
-                    <td>{{task.status}}</td>
-                    <td>
-                        <button pButton icon="pi pi-pencil" class="p-button-success" (click)="editTask(task.id)"></button>
-                        
-                    </td>
-                </tr>
+    <p-button severity="secondary" (click)="showAdd()">Ajouter un tâche</p-button>
+    <p-table
+      [value]="tasksList"
+      [paginator]="true"
+      [rows]="10"
+      [tableStyle]="{'min-width' : '50rem'}"
+    >
+      <ng-template pTemplate="header">
+        <tr class="col">
+          <th>Libellé</th>
+          <th>Attribution</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-task>
+        <tr class="col">
+          <td>{{task.text}}</td>
+          <td>{{task.user.firstName}}</td>
+          <td>
+            @switch (task.status){
+              @case (0) {
+                <span class="badge p-badge-primary">En Cours</span>
+              }
+              @case (1) {
+                <span class="badge p-badge-danger">Bloqué</span>
+              }
+              @case (2) {
+                <span class="badge p-badge-success">Terminé</span>
+              }
             }
-        </tbody>
-    </table>
+          </td>
+          <td>
+            <p-button icon="pi pi-pencil" [text]="true" severity="warning"></p-button>
+            <p-button icon="pi pi-trash" [text]="true" severity="danger "></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
 </div>
