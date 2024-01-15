@@ -1,9 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Build.Framework;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProtaskerBackend.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ProtaskerBackendContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProtaskerBackendContext") ?? throw new InvalidOperationException("Connection string 'ProtaskerBackendContext' not found.")));
+
+// Add CORS
+var allowOriginPolicy = "AllowOriginPolicy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: allowOriginPolicy, policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+}
+);
 
 // Add services to the container.
 
@@ -22,6 +37,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(allowOriginPolicy);
 
 app.UseAuthorization();
 
