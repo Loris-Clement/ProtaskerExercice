@@ -1,29 +1,31 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {DropdownModule} from "primeng/dropdown";
-import {ButtonModule} from "primeng/button";
+import {UserGet} from "../../models/UserGet";
 import {TasksService} from "../../services/tasks.service";
 import {UserService} from "../../services/user.service";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Task} from "../../models/Task";
-import {UserGet} from "../../models/UserGet";
+import {DropdownModule} from "primeng/dropdown";
+import {ButtonModule} from "primeng/button";
 
 @Component({
-  selector: 'app-add-task',
+  selector: 'app-edit-task',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     DropdownModule,
-    ButtonModule,
+    ButtonModule
   ],
-  templateUrl: './add-task.component.html',
-  styleUrl: './add-task.component.css'
+  templateUrl: './edit-task.component.html',
+  styleUrl: './edit-task.component.css'
 })
-export class AddTaskComponent implements OnInit {
+export class EditTaskComponent implements OnInit{
   usersList: UserGet[] = [];
   status = ["En Cours", "Bloqué", "Terminé"];
 
-  constructor(private taskService: TasksService, private userService: UserService, private ref: DynamicDialogRef, private config: DynamicDialogConfig) {}
+  constructor(private taskService: TasksService, private userService: UserService, private ref: DynamicDialogRef, private config: DynamicDialogConfig) {
+
+  }
 
 
   taskForm = new FormGroup({
@@ -34,9 +36,7 @@ export class AddTaskComponent implements OnInit {
 
   ngOnInit() {
     this.getAllUsers();
-  }
-
-  addTask(){
+  }addTask(){
     let statusNumber: number = -1;
     switch (this.taskForm.value.selectedStatus!){
       case "En Cours":
@@ -57,16 +57,10 @@ export class AddTaskComponent implements OnInit {
       status: statusNumber,
     }
     console.log("Task : ",task);
-    this.taskService.addTask(task).subscribe({
-      next: response => {
-        this.ref.close();
-        this.updateTasksList();
-      },
-      error: err => {
-        console.error("Erreur : ", err);
-      }
-    });
+
   }
+
+
 
   cancel() {
     this.ref.close();
