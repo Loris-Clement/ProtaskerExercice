@@ -46,7 +46,8 @@ export class TasksListComponent implements OnInit{
   showAdd() {
     this.ref = this.dialogService.open(AddTaskComponent, {
       header: 'Nouvelle tâche',
-      data: {ref: this.ref, refreshTasks: this.refreshTasks.bind(this)}
+      data: {ref: this.ref, refreshTasks: this.refreshTasks.bind(this)},
+      closable: false
     })
   }
 

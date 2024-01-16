@@ -55,14 +55,15 @@ export class AddTaskComponent implements OnInit {
         break;
     }
     let task: Task = {
-      idUser: this.taskForm.value.selectedUser?.id!,
+      userId: this.taskForm.value.selectedUser?.id!,
       text: this.taskForm.value.textTask!,
       status: statusNumber,
     }
     console.log("Task : ",task);
     this.taskService.addTask(task).subscribe({
       next: response => {
-        console.log("Succes : ", response);
+        this.ref.close();
+        this.updateTasksList();
       },
       error: err => {
         console.error("Erreur : ", err);
@@ -71,7 +72,8 @@ export class AddTaskComponent implements OnInit {
   }
 
   cancel() {
-
+    this.ref.close();
+    this.updateTasksList();
   }
 
   getAllUsers(){
@@ -95,4 +97,10 @@ export class AddTaskComponent implements OnInit {
     })
   }
 
+  private updateTasksList() {
+    const refreshTasks = this.config?.data.refreshTasks;
+    if (refreshTasks){
+      refreshTasks();
+    }
+  }
 }
