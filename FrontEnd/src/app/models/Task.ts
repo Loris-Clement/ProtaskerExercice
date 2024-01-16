@@ -3,7 +3,7 @@ import {User} from "./User";
 export interface Task {
   id?: number;
   userId: number;
-  text: String;
+  text: string;
   status: number;
   user?: User;
 }

@@ -19,12 +19,22 @@ import {ButtonModule} from "primeng/button";
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.css'
 })
-export class EditTaskComponent implements OnInit{
+export class EditTaskComponent{
   usersList: UserGet[] = [];
   status = ["En Cours", "Bloqué", "Terminé"];
 
   constructor(private taskService: TasksService, private userService: UserService, private ref: DynamicDialogRef, private config: DynamicDialogConfig) {
-
+    this.getAllUsers();
+    this.taskService.getTaskById(this.config.data.id).subscribe({
+      next: response => {
+        console.log("Test : ", this.usersList.find(user => user.id === response.userId))
+        this.taskForm.patchValue({
+          textTask: response.text,
+          selectedUser: this.usersList.find(user => user.id === response.userId),
+          selectedStatus: this.status[response.status]
+        })
+      }
+    })
   }
 
 
@@ -33,10 +43,7 @@ export class EditTaskComponent implements OnInit{
     selectedUser: new FormControl<UserGet | null>(null,[Validators.required]),
     selectedStatus: new FormControl('',[Validators.required])
   })
-
-  ngOnInit() {
-    this.getAllUsers();
-  }addTask(){
+  updateTask(){
     let statusNumber: number = -1;
     switch (this.taskForm.value.selectedStatus!){
       case "En Cours":
