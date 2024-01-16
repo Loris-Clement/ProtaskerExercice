@@ -32,8 +32,8 @@
             }
           </td>
           <td>
-            <p-button icon="pi pi-pencil" [text]="true" severity="warning"></p-button>
-            <p-button icon="pi pi-trash" [text]="true" severity="danger "></p-button>
+            <p-button icon="pi pi-pencil" [text]="true" severity="warning" (click)="showEdit(task.id)"></p-button>
+            <p-button icon="pi pi-trash" [text]="true" severity="danger " (click)="showDelete(task.id)"></p-button>
           </td>
         </tr>
       </ng-template>

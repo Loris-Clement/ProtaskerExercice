@@ -6,6 +6,7 @@ import {TasksService} from "../../services/tasks.service";
 import {TableModule} from "primeng/table";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AddTaskComponent} from "../../components/add-task/add-task.component";
+import {EditTaskComponent} from "../../components/edit-task/edit-task.component";
 
 @Component({
   selector: 'app-tasks-list',
@@ -60,5 +61,16 @@ export class TasksListComponent implements OnInit{
         console.error("Erreur : ",err);
       }
     })
+  }
+
+  showEdit(id : number) {
+    this.ref = this.dialogService.open(EditTaskComponent, {
+      header: "Modification d'une tâche",
+      data: {ref: this, id: id, refreshTasks: this.refreshTasks.bind(this)}
+    });
+  }
+
+  showDelete(id: number) {
+
   }
 }
