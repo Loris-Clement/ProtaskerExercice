@@ -8,6 +8,7 @@ import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AddTaskComponent} from "../../components/add-task/add-task.component";
 import {EditTaskComponent} from "../../components/edit-task/edit-task.component";
 import {TagModule} from "primeng/tag";
+import {DeleteTaskComponent} from "../../components/delete-task/delete-task.component";
 
 @Component({
   selector: 'app-tasks-list',
@@ -73,6 +74,8 @@ export class TasksListComponent implements OnInit{
   }
 
   showDelete(id: number) {
-    this.ref = this.dialogService.open()
+    this.ref = this.dialogService.open(DeleteTaskComponent,  {
+      data: {ref: this.ref, id: id, refreshTasks: this.refreshTasks.bind(this)}
+    })
   }
 }

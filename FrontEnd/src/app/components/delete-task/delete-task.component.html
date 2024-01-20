@@ -1,0 +1,13 @@
+<div>
+  <div>
+    <i class="pi pi-exclamation-triangle"></i>
+    <h1>Suppression d'une tâche</h1>
+    <p>
+      Etes-vous sûr de vouloir procéder à la suppression ?
+    </p>
+  </div>
+  <div>
+    <p-button label="Annuler" (click)="cancel()"></p-button>
+    <p-button label="Supprimer" (click)="deleteTask(task.id)"></p-button>
+  </div>
+</div>
