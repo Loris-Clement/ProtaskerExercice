@@ -11,13 +11,23 @@ export class TasksService {
 
   constructor(private http: HttpClient) { }
 
-  //getAll method
+  //get methods
+  //Get all
   getAllTask(): Observable<Task[]> {
     return this.http.get<Task[]>(environment.apiUrl + 'Tasks');
+  }
+  //Get by id
+  getTaskById(id: number): Observable<Task> {
+    return this.http.get<Task>(environment.apiUrl + `Tasks/${id}`)
   }
 
   //Post method
   addTask(task: Task) {
     return this.http.post(environment.apiUrl + 'Tasks', task);
+  }
+
+  //Put method
+  updateTask(task: Task) {
+    return this.http.put(environment.apiUrl + `Tasks/${task.id}`, task);
   }
 }

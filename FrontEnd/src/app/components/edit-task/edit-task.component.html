@@ -1,0 +1,17 @@
+<form [formGroup]="taskForm">
+  <div class="task-form-continer">
+    <label>Libéllé de la tâche</label>
+    <input
+      type="text"
+      class="form-input"
+      formControlName="textTask"
+      required
+    />
+    <label class="form-label">Attribution</label>
+    <p-dropdown [options]="usersList" formControlName="selectedUser" optionLabel="fullName" appendTo="body"></p-dropdown>
+    <label class="form-label">Statut</label>
+    <p-dropdown [options]="status" formControlName="selectedStatus" appendTo="body"></p-dropdown>
+  </div>
+  <p-button label="Annuler" [text]="true" severity="secondary" (click)="cancel()"></p-button>
+  <p-button label="Modifier" severity="secondary" (click)="updateTask()"></p-button>
+</form>

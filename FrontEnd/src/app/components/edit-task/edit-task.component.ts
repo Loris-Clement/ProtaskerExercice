@@ -1,42 +1,53 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {DropdownModule} from "primeng/dropdown";
-import {ButtonModule} from "primeng/button";
+import {UserGet} from "../../models/UserGet";
 import {TasksService} from "../../services/tasks.service";
 import {UserService} from "../../services/user.service";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Task} from "../../models/Task";
-import {UserGet} from "../../models/UserGet";
+import {DropdownModule} from "primeng/dropdown";
+import {ButtonModule} from "primeng/button";
 
 @Component({
-  selector: 'app-add-task',
+  selector: 'app-edit-task',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     DropdownModule,
-    ButtonModule,
+    ButtonModule
   ],
-  templateUrl: './add-task.component.html',
-  styleUrl: './add-task.component.css'
+  templateUrl: './edit-task.component.html',
+  styleUrl: './edit-task.component.css'
 })
-export class AddTaskComponent implements OnInit {
+export class EditTaskComponent implements OnInit{
   usersList: UserGet[] = [];
   status = ["En Cours", "Bloqué", "Terminé"];
+  task!: Task;
 
-  constructor(private taskService: TasksService, private userService: UserService, private ref: DynamicDialogRef, private config: DynamicDialogConfig) {}
+  constructor(private taskService: TasksService, private userService: UserService, private ref: DynamicDialogRef, private config: DynamicDialogConfig) {
 
+  }
+
+  ngOnInit() {
+    this.getAllUsers();
+    this.taskService.getTaskById(this.config.data.id).subscribe({
+      next: response => {
+        this.task = response
+        this.taskForm.patchValue({
+          textTask: response.text,
+          selectedUser: this.usersList.find(user => user.id === response.userId),
+          selectedStatus: this.status[response.status]
+        })
+      }
+    });
+  }
 
   taskForm = new FormGroup({
     textTask: new FormControl('',[Validators.required]),
     selectedUser: new FormControl<UserGet | null>(null,[Validators.required]),
     selectedStatus: new FormControl('',[Validators.required])
   })
-
-  ngOnInit() {
-    this.getAllUsers();
-  }
-
-  addTask(){
+  updateTask(){
     let statusNumber: number = -1;
     switch (this.taskForm.value.selectedStatus!){
       case "En Cours":
@@ -51,22 +62,21 @@ export class AddTaskComponent implements OnInit {
         statusNumber = 2;
         break;
     }
-    let task: Task = {
-      userId: this.taskForm.value.selectedUser?.id!,
-      text: this.taskForm.value.textTask!,
-      status: statusNumber,
-    }
-    console.log("Task : ",task);
-    this.taskService.addTask(task).subscribe({
+      this.task.userId  = this.taskForm.value.selectedUser?.id!;
+      this.task.text = this.taskForm.value.textTask!;
+      this.task.status = statusNumber;
+    console.log("Task : ",this.task);
+    this.taskService.updateTask(this.task).subscribe({
       next: response => {
         this.ref.close();
-        this.updateTasksList();
       },
       error: err => {
-        console.error("Erreur : ", err);
+        console.error("Erreur : ",err);
       }
     });
   }
+
+
 
   cancel() {
     this.ref.close();
