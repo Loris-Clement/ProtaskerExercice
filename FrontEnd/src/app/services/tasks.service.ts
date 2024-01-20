@@ -25,4 +25,9 @@ export class TasksService {
   addTask(task: Task) {
     return this.http.post(environment.apiUrl + 'Tasks', task);
   }
+
+  //Put method
+  updateTask(task: Task) {
+    return this.http.put(environment.apiUrl + `Tasks/${task.id}`, task);
+  }
 }
