@@ -21,13 +21,13 @@
           <td>
             @switch (task.status){
               @case (0) {
-                <span class="badge p-badge-primary">En Cours</span>
+                <p-tag severity="warning">En Cours</p-tag>
               }
               @case (1) {
-                <span class="badge p-badge-danger">Bloqué</span>
+                <p-tag severity="danger">Bloqué</p-tag>
               }
               @case (2) {
-                <span class="badge p-badge-success">Terminé</span>
+                <p-tag severity="success">Terminé</p-tag>
               }
             }
           </td>

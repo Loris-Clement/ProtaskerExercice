@@ -69,14 +69,13 @@ export class EditTaskComponent implements OnInit{
     this.taskService.updateTask(this.task).subscribe({
       next: response => {
         this.ref.close();
+        this.updateTasksList();
       },
       error: err => {
         console.error("Erreur : ",err);
       }
     });
   }
-
-
 
   cancel() {
     this.ref.close();
