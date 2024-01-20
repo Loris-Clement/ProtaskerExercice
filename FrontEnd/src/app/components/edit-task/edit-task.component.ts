@@ -19,24 +19,28 @@ import {ButtonModule} from "primeng/button";
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.css'
 })
-export class EditTaskComponent{
+export class EditTaskComponent implements OnInit{
   usersList: UserGet[] = [];
   status = ["En Cours", "Bloqué", "Terminé"];
+  task!: Task;
 
   constructor(private taskService: TasksService, private userService: UserService, private ref: DynamicDialogRef, private config: DynamicDialogConfig) {
+
+  }
+
+  ngOnInit() {
     this.getAllUsers();
     this.taskService.getTaskById(this.config.data.id).subscribe({
       next: response => {
-        console.log("Test : ", this.usersList.find(user => user.id === response.userId))
+        this.task = response
         this.taskForm.patchValue({
           textTask: response.text,
           selectedUser: this.usersList.find(user => user.id === response.userId),
           selectedStatus: this.status[response.status]
         })
       }
-    })
+    });
   }
-
 
   taskForm = new FormGroup({
     textTask: new FormControl('',[Validators.required]),
@@ -58,13 +62,18 @@ export class EditTaskComponent{
         statusNumber = 2;
         break;
     }
-    let task: Task = {
-      userId: this.taskForm.value.selectedUser?.id!,
-      text: this.taskForm.value.textTask!,
-      status: statusNumber,
-    }
-    console.log("Task : ",task);
-
+      this.task.userId  = this.taskForm.value.selectedUser?.id!;
+      this.task.text = this.taskForm.value.textTask!;
+      this.task.status = statusNumber;
+    console.log("Task : ",this.task);
+    this.taskService.updateTask(this.task).subscribe({
+      next: response => {
+        this.ref.close();
+      },
+      error: err => {
+        console.error("Erreur : ",err);
+      }
+    });
   }
 
 
