@@ -62,21 +62,19 @@ export class EditTaskComponent implements OnInit{
         statusNumber = 2;
         break;
     }
-      this.task.userId  = this.taskForm.value.selectedUser?.id!;
-      this.task.text = this.taskForm.value.textTask!;
-      this.task.status = statusNumber;
-    console.log("Task : ",this.task);
+    this.task.userId  = this.taskForm.value.selectedUser?.id!;
+    this.task.text = this.taskForm.value.textTask!;
+    this.task.status = statusNumber;
     this.taskService.updateTask(this.task).subscribe({
       next: response => {
         this.ref.close();
+        this.updateTasksList();
       },
       error: err => {
         console.error("Erreur : ",err);
       }
     });
   }
-
-
 
   cancel() {
     this.ref.close();
@@ -96,7 +94,6 @@ export class EditTaskComponent implements OnInit{
             fullName: fullName,
           });
         }
-        console.log("Succès : ", response);
       },
       error: err => {
         console.error("Erreur : ", err);

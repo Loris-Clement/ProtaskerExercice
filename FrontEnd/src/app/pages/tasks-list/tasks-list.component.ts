@@ -7,6 +7,8 @@ import {TableModule} from "primeng/table";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AddTaskComponent} from "../../components/add-task/add-task.component";
 import {EditTaskComponent} from "../../components/edit-task/edit-task.component";
+import {TagModule} from "primeng/tag";
+import {DeleteTaskComponent} from "../../components/delete-task/delete-task.component";
 
 @Component({
   selector: 'app-tasks-list',
@@ -14,7 +16,8 @@ import {EditTaskComponent} from "../../components/edit-task/edit-task.component"
   imports: [
     PanelModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    TagModule
   ],
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css'
@@ -66,11 +69,15 @@ export class TasksListComponent implements OnInit{
   showEdit(id : number) {
     this.ref = this.dialogService.open(EditTaskComponent, {
       header: "Modification d'une tâche",
-      data: {ref: this, id: id, refreshTasks: this.refreshTasks.bind(this)}
+      data: {ref: this.ref, id: id, refreshTasks: this.refreshTasks.bind(this)},
+      closable: false
     });
   }
 
   showDelete(id: number) {
-
+    this.ref = this.dialogService.open(DeleteTaskComponent,  {
+      data: {ref: this.ref, id: id, refreshTasks: this.refreshTasks.bind(this)},
+      closable: false
+    })
   }
 }
