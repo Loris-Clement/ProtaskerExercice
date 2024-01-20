@@ -69,13 +69,15 @@ export class TasksListComponent implements OnInit{
   showEdit(id : number) {
     this.ref = this.dialogService.open(EditTaskComponent, {
       header: "Modification d'une tâche",
-      data: {ref: this.ref, id: id, refreshTasks: this.refreshTasks.bind(this)}
+      data: {ref: this.ref, id: id, refreshTasks: this.refreshTasks.bind(this)},
+      closable: false
     });
   }
 
   showDelete(id: number) {
     this.ref = this.dialogService.open(DeleteTaskComponent,  {
-      data: {ref: this.ref, id: id, refreshTasks: this.refreshTasks.bind(this)}
+      data: {ref: this.ref, id: id, refreshTasks: this.refreshTasks.bind(this)},
+      closable: false
     })
   }
 }

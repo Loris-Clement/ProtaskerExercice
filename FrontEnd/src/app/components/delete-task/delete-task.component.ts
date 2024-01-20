@@ -32,7 +32,6 @@ export class DeleteTaskComponent implements OnInit{
   deleteTask() {
     this.taskService.deleteTask(this.taskID).subscribe({
       next: response =>{
-        console.log("Succes : ", response);
         this.ref.close();
         this.updateTasksList();
       }

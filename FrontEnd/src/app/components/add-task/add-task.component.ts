@@ -86,7 +86,6 @@ export class AddTaskComponent implements OnInit {
             fullName: fullName,
           });
         }
-        console.log("Succès : ", response);
       },
       error: err => {
         console.error("Erreur : ", err);
