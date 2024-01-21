@@ -6,7 +6,8 @@ import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import {DialogModule} from "primeng/dialog";
 import {DialogService} from "primeng/dynamicdialog";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ConfirmationService} from "primeng/api";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideHttpClient(), DialogModule, DialogService, importProvidersFrom([BrowserAnimationsModule])]
+  providers: [provideRouter(routes), provideHttpClient(), DialogModule, DialogService, importProvidersFrom([BrowserAnimationsModule]), ConfirmationService]
 };

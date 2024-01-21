@@ -1,7 +1,27 @@
 <div>
-    <p-button severity="secondary" (click)="showAdd()">Ajouter un tâche</p-button>
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <p-button severity="secondary" (click)="showAdd()">Ajouter un tâche</p-button>
+    </div>
+    <div class="p-toolbar-group-end">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input [(ngModel)]="searchTerm" pInputText placeholder="Rechercher sur le libellé" (input)="updateFilteredTasks()">
+      </span>
+      <p-confirmPopup>
+        <ng-template pTemplate="headless">
+          <label>Attribution</label>
+          <p-dropdown [options]="userList" [(ngModel)]="selectedUser" optionLabel="fullName" appendTo="body"></p-dropdown>
+          <label>Statut</label>
+          <p-dropdown [options]="status"  [(ngModel)]="selectedStatus" appendTo="body" optionLabel="text"></p-dropdown>
+          <p-button  label="Réinitialiser" (click)="reset()"></p-button>
+        </ng-template>
+      </p-confirmPopup>
+      <p-button icon="pi pi-filter" [text]="true" severity="secondary"></p-button>
+    </div>
+  </p-toolbar>
     <p-table
-      [value]="tasksList"
+      [value]="filteredTasksList"
       [paginator]="true"
       [rows]="10"
       [tableStyle]="{'min-width' : '50rem'}"
