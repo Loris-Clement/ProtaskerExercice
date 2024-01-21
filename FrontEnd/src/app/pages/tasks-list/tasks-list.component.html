@@ -1,7 +1,30 @@
 <div>
-    <p-button severity="secondary" (click)="showAdd()">Ajouter un tâche</p-button>
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <p-button severity="secondary" (click)="showAdd()">Ajouter un tâche</p-button>
+    </div>
+    <div class="p-toolbar-group-end">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input [(ngModel)]="searchTerm" pInputText placeholder="Rechercher sur le libellé" (input)="updateFilteredTasks()">
+      </span>
+      <p-dialog [(visible)]="displayDialog" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" [closable]="false">
+        <div>
+          <label>Attribution</label>
+          <p-dropdown [options]="userList" [(ngModel)]="selectedUser" optionLabel="fullName" appendTo="body" placeholder="Veuillez sélectionner un utilisateur" (onChange)="updateFilteredTasks()"></p-dropdown>
+          <label>Statut</label>
+          <p-dropdown [options]="status"  [(ngModel)]="selectedStatus" appendTo="body" optionLabel="text" placeholder="Veuillez sélectionner un statut" (onChange)="updateFilteredTasks()"></p-dropdown>
+          <div class="align-items-center">
+          <p-button label="Réinitialiser" severity="secondary" (click)="reset()"></p-button>
+          </div>
+        </div>
+      </p-dialog>
+      <p-button icon="pi pi-file-excel" [text]="true" severity="success"></p-button>
+      <p-button icon="pi pi-filter" [text]="true" severity="secondary" (click)="toggleDialog()"></p-button>
+    </div>
+  </p-toolbar>
     <p-table
-      [value]="tasksList"
+      [value]="filteredTasksList"
       [paginator]="true"
       [rows]="10"
       [tableStyle]="{'min-width' : '50rem'}"
