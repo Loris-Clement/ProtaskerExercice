@@ -18,6 +18,7 @@ import {ConfirmationService} from "primeng/api";
 import {FormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {User} from "../../models/User";
+import {DialogModule} from "primeng/dialog";
 
 @Component({
   selector: 'app-tasks-list',
@@ -31,7 +32,8 @@ import {User} from "../../models/User";
     ChipsModule,
     ConfirmPopupModule,
     FormsModule,
-    DropdownModule
+    DropdownModule,
+    DialogModule
   ],
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css'
@@ -49,6 +51,7 @@ export class TasksListComponent implements OnInit{
   ]
   selectedStatus: string = '';
   selectedUser!: null;
+  displayDialog = false;
 
 
   constructor(private tasksService: TasksService, public dialogService: DialogService, private userService: UserService) {
@@ -137,5 +140,10 @@ export class TasksListComponent implements OnInit{
     this.filteredTasksList = this.tasksList;
     this.selectedStatus  = '';
     this.selectedUser = null;
+    this.toggleDialog();
+  }
+
+  toggleDialog() {
+    this.displayDialog = !this.displayDialog;
   }
 }
