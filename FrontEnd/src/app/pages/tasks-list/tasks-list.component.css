@@ -25,4 +25,18 @@ dropdown {
   align-items: center;
 }
 
+.header{
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h3{
+    margin:  0;
+    color:darkorange;
+  }
+  h4 {
+    margin:  0;
+    color:darkorange;
+  }
+}
 

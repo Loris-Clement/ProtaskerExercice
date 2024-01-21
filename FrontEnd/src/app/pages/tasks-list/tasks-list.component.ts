@@ -145,4 +145,8 @@ export class TasksListComponent implements OnInit{
   toggleDialog() {
     this.displayDialog = !this.displayDialog;
   }
+
+  exportExcel(){
+
+  }
 }
