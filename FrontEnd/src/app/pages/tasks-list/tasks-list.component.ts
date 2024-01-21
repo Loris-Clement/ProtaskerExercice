@@ -14,10 +14,8 @@ import {ChipsModule} from "primeng/chips";
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {UserService} from "../../services/user.service";
 import {UserGet} from "../../models/UserGet";
-import {ConfirmationService} from "primeng/api";
 import {FormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
-import {User} from "../../models/User";
 import {DialogModule} from "primeng/dialog";
 
 @Component({
@@ -131,9 +129,10 @@ export class TasksListComponent implements OnInit{
   updateFilteredTasks(): void {
     this.filteredTasksList = this.tasksList.filter((task) => {
       const textMatch =  task.text.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const statusMatch = this.status.some((s) => s.id === task.status);
+      const statusMatch = this.status.find((s) => s.id === task.id)
       return textMatch && statusMatch;
     });
+    console.log("Test :",this.filteredTasksList)
   }
 
   reset(){
