@@ -1,0 +1,28 @@
+th {
+  text-align: center;
+  color:  darkorange
+}
+
+td {
+  text-align: center;
+}
+
+label {
+  color: darkorange;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input,
+dropdown {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+
