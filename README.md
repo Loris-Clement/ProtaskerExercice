@@ -1,14 +1,13 @@
 # ProtaskerExercice
 
-#Frontend
+## Frontend
 ```bash
 npm  i
 npm start
 ```
 http://localhost:4200
 
-#Backend
-Execute script  in the database
+## Backend
 -- SQL script for data generation
 ```bash
 INSERT INTO Users(LastName, FirstName) VALUES ('Clement', 'Loris');
