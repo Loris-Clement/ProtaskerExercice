@@ -1,6 +1,7 @@
 # ProtaskerExercice
 
 #Frontend
+'''bash
 npm  i
 npm start
 http://localhost:4200
