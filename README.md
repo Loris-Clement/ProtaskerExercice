@@ -7,6 +7,7 @@ http://localhost:4200
 
 #Backend
 Execute script  in the database
+-- SQL script for data generation
 INSERT INTO Users(LastName, FirstName) VALUES ('Clement', 'Loris');
 INSERT INTO Users(LastName, FirstName) VALUES ('Doe', 'John');
 INSERT INTO Users(LastName, FirstName) VALUES ('Doe', 'Jane');
