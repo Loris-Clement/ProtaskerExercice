@@ -1,6 +1,6 @@
 .task-form-container {
-  width: 60%; /* ou la largeur souhaitée */
-  margin: auto; /* centre le conteneur horizontalement */
+  width: 60%;
+  margin: auto;
 }
 .form-label {
   display: block;
@@ -10,8 +10,8 @@
 
 .form-input,
 .p-dropdown {
-  width: 100%; /* pour rendre tous les champs de la même largeur */
-  box-sizing: border-box; /* inclut les bordures et les rembourrages dans la largeur */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .flex {
@@ -20,5 +20,5 @@
 }
 
 .gap-2 {
-  margin-right: 2px; /* ajustez selon vos besoins */
+  margin-right: 2px;
 }

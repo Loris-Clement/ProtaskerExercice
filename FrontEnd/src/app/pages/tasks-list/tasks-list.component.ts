@@ -100,7 +100,9 @@ export class TasksListComponent implements OnInit{
     this.ref = this.dialogService.open(AddTaskComponent, {
       header: 'Nouvelle tâche',
       data: {ref: this.ref, refreshTasks: this.refreshTasks.bind(this)},
-      closable: false
+      closable: false,
+      width: '20%',
+      height: '45%'
     })
   }
 
@@ -119,14 +121,18 @@ export class TasksListComponent implements OnInit{
     this.ref = this.dialogService.open(EditTaskComponent, {
       header: "Modification d'une tâche",
       data: {ref: this.ref, id: id, refreshTasks: this.refreshTasks.bind(this)},
-      closable: false
+      closable: false,
+      width: '20%',
+      height: '45%'
     });
   }
 
   showDelete(id: number) {
     this.ref = this.dialogService.open(DeleteTaskComponent,  {
       data: {ref: this.ref, id: id, refreshTasks: this.refreshTasks.bind(this)},
-      closable: false
+      closable: false,
+      width: '20%',
+      height: '45%'
     })
   }
 
