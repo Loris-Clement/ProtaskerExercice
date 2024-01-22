@@ -10,8 +10,8 @@ export class ExcelService {
   constructor(private http: HttpClient) {}
 
   // Export method
-  exportTasksToExcel(){
-    return this.http.get(environment.apiUrl + 'export');
+  exportTasksToExcel(search: string, status: number, userId: number){
+    return this.http.get(environment.apiUrl + 'Tasks/export', search, status, userId);
   }
 
 }
