@@ -47,7 +47,7 @@ namespace ProtaskerBackend.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("Tasks", (string)null);
                 });
 
             modelBuilder.Entity("ProtaskerBackend.Models.Users", b =>
@@ -68,7 +68,7 @@ namespace ProtaskerBackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ProtaskerBackend.Models.Tasks", b =>

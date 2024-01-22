@@ -17,6 +17,7 @@ import {UserGet} from "../../models/UserGet";
 import {FormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {DialogModule} from "primeng/dialog";
+import {ExcelService} from "../../services/excel.service";
 
 @Component({
   selector: 'app-tasks-list',
@@ -47,18 +48,21 @@ export class TasksListComponent implements OnInit{
     {id: 1, text: "Bloqué"},
     {id: 2, text: "Terminé"}
   ]
-  selectedStatus: string = '';
-  selectedUser!: null;
+  selectedStatus = { id: -1, text: '' };
+  selectedUser = {
+    id: -1,
+    fullName: ""
+  }
   displayDialog = false;
 
 
-  constructor(private tasksService: TasksService, public dialogService: DialogService, private userService: UserService) {
+  constructor(private tasksService: TasksService, public dialogService: DialogService, private userService: UserService, private excelService: ExcelService) {
   }
   ngOnInit() {
     this.getAllTasks();
-    console.log(this.tasksList);
-    this.updateFilteredTasks();
     this.getAllUsers();
+    console.log(this.tasksList);
+    this.filteredTasksList = this.tasksList;
   }
 
   getAllTasks() {
@@ -129,20 +133,35 @@ export class TasksListComponent implements OnInit{
   updateFilteredTasks(): void {
     this.filteredTasksList = this.tasksList.filter((task) => {
       const textMatch =  task.text.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const statusMatch = this.status.find((s) => s.id === task.id)
-      return textMatch && statusMatch;
+      const statusMatch = this.selectedStatus.id == -1 ? true : this.selectedStatus.id == task.status;
+      const userMatch = this.selectedUser.id == -1 ? true : this.selectedUser.id == task.userId;
+      return textMatch && statusMatch && userMatch;
     });
-    console.log("Test :",this.filteredTasksList)
   }
 
   reset(){
     this.filteredTasksList = this.tasksList;
-    this.selectedStatus  = '';
-    this.selectedUser = null;
+    this.searchTerm = '';
+    this.selectedStatus = { id: -1, text: '' };
+    this.selectedUser = {
+      id: -1,
+      fullName: ""
+    }
     this.toggleDialog();
   }
 
   toggleDialog() {
     this.displayDialog = !this.displayDialog;
+  }
+
+  exportExcel(){
+    this.excelService.exportTasksToExcel(this.searchTerm, this.selectedStatus.id, this.selectedUser.id).subscribe({
+      next: response =>{
+        console.log("Succes");
+      },
+      error:  err => {
+        console.error("Erreur :", err);
+      }
+    })
   }
 }
