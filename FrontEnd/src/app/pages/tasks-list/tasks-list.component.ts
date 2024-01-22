@@ -47,8 +47,8 @@ export class TasksListComponent implements OnInit{
     {id: 1, text: "Bloqué"},
     {id: 2, text: "Terminé"}
   ]
-  selectedStatus: string = '';
-  selectedUser!: null;
+  selectedStatus!: {id: number; text: string};
+  selectedUser!: UserGet;
   displayDialog = false;
 
 
@@ -129,8 +129,9 @@ export class TasksListComponent implements OnInit{
   updateFilteredTasks(): void {
     this.filteredTasksList = this.tasksList.filter((task) => {
       const textMatch =  task.text.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const statusMatch = this.status.find((s) => s.id === task.id)
-      return textMatch && statusMatch;
+      const statusMatch = this.selectedStatus.id === task.status;
+      const userMatch = this.selectedUser.id === task.userId;
+      return textMatch && statusMatch && userMatch;
     });
     console.log("Test :",this.filteredTasksList)
   }
