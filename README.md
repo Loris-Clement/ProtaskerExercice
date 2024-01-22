@@ -1,10 +1,11 @@
 # ProtaskerExercice
 
 #Frontend
-'''bash
+```bash
 npm  i
 npm start
 http://localhost:4200
+```
 
 #Backend
 Execute script  in the database
