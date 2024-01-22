@@ -22,6 +22,18 @@ namespace ProtaskerBackend.Migrations
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] {"Id", "Lastname", "Firstname"},
+                values:  new object[,]
+                {
+                    { 1, "Clement", "Loris" },
+                    { 2, "Doe", "John" },
+                    { 3, "Doe", "Jane" }
+                }
+                );
+
+
             migrationBuilder.CreateTable(
                 name: "Tasks",
                 columns: table => new

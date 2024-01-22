@@ -1,4 +1,8 @@
 <div>
+  <div class="header">
+    <h3>ProTasker</h3>
+    <h4>Tâches</h4>
+  </div>
   <p-toolbar>
     <div class="p-toolbar-group-start">
       <p-button severity="secondary" (click)="showAdd()">Ajouter un tâche</p-button>
@@ -19,7 +23,7 @@
           </div>
         </div>
       </p-dialog>
-      <p-button icon="pi pi-file-excel" [text]="true" severity="success"></p-button>
+      <p-button icon="pi pi-file-excel" [text]="true" severity="success" (click)="exportExcel()"></p-button>
       <p-button icon="pi pi-filter" [text]="true" severity="secondary" (click)="toggleDialog()"></p-button>
     </div>
   </p-toolbar>

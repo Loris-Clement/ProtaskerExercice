@@ -12,7 +12,7 @@ namespace ProtaskerBackend.Models
         [Required]
         public string Text { get; set; }
         [Required]
-        public Status Status { get; set; }
+        public byte Status { get; set; }
 
         // Reference to User
         public Users? User { get; set; }

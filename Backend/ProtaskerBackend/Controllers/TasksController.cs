@@ -4,9 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using ProtaskerBackend.Data;
 using ProtaskerBackend.Models;
+using OfficeOpenXml;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace ProtaskerBackend.Controllers
 {
@@ -48,6 +51,51 @@ namespace ProtaskerBackend.Controllers
             }
 
             return tasks;
+        }
+
+        // Excel export api/Tasks/export
+        [HttpGet("export")]
+        public async Task<ActionResult> ExcelTask(string? search, byte? status, int? userId)
+        {
+            var tasks = _context.Tasks.Include(x => x.User).Where(t =>
+                (search == null || t.Text.ToLower().Contains(search.ToLower())) &&
+                (status == null || t.Status == status));
+            var tasks2 = tasks.Where(t =>
+                userId == null || t.UserId == userId
+            );
+            var tasks3 = await tasks2.OrderBy(t => t.Text).ToListAsync();
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using var package = new ExcelPackage();
+
+            ExcelWorksheet sheet = package.Workbook.Worksheets.Add("tasks");
+
+            sheet.Cells[1, 1].Value = "Libellé de la tâche";
+            sheet.Cells[1, 2].Value = "Attribution";
+            sheet.Cells[1, 3].Value = "Statut";
+
+            int recordIndex = 2;
+            foreach (Models.Tasks  task in tasks3)
+            {
+                sheet.Cells[recordIndex, 1].Value = task.Text;
+                sheet.Cells[recordIndex, 2].Value = task.User == null ? "null" : $"{task.User?.FirstName} {task.User?.LastName}";
+                sheet.Cells[recordIndex, 3].Value = status switch
+                {
+                    0 => "En cours",
+                    1 => "Bloqué",
+                    _ => "Terminé",
+                };
+                recordIndex++;
+            }
+
+            sheet.Column(1).AutoFit();
+            sheet.Column(2).AutoFit();
+            sheet.Column(3).AutoFit();
+
+            package.SaveAs("Export/tasks.xlsx");
+            string filePath = package.File.FullName;
+            string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            return PhysicalFile(filePath, contentType, package.File.Name);
         }
 
         // PUT: api/Tasks/5
