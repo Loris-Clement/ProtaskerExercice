@@ -57,11 +57,13 @@ namespace ProtaskerBackend.Controllers
         [HttpGet("export")]
         public async Task<ActionResult> ExcelTask(string? search, byte? status, int? userId)
         {
-            var tasks = await _context.Tasks.Include(x => x.User).Where(t =>
+            var tasks = _context.Tasks.Include(x => x.User).Where(t =>
                 (search == null || t.Text.ToLower().Contains(search.ToLower())) &&
-                (status == null || t.Status == status &&
-                (userId == null || t.UserId == userId)
-                )).OrderBy(t => t.Text).ToListAsync();
+                (status == null || t.Status == status));
+            var tasks2 = tasks.Where(t =>
+                userId == null || t.UserId == userId
+            );
+            var tasks3 = await tasks2.OrderBy(t => t.Text).ToListAsync();
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using var package = new ExcelPackage();
@@ -73,7 +75,7 @@ namespace ProtaskerBackend.Controllers
             sheet.Cells[1, 3].Value = "Statut";
 
             int recordIndex = 2;
-            foreach (Models.Tasks  task in tasks)
+            foreach (Models.Tasks  task in tasks3)
             {
                 sheet.Cells[recordIndex, 1].Value = task.Text;
                 sheet.Cells[recordIndex, 2].Value = task.User == null ? "null" : $"{task.User?.FirstName} {task.User?.LastName}";

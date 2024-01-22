@@ -11,7 +11,15 @@ export class ExcelService {
 
   // Export method
   exportTasksToExcel(search: string, status: number, userId: number){
-    return this.http.get(environment.apiUrl + 'Tasks/export', search, status, userId);
+    let url = 'Tasks/export'
+      if (search != '' || status != -1 || userId != -1){
+        url += '?'
+        if (search != '') url += `search=${search}&`
+        if (status != -1) url += `status=${status}&`
+        if (userId !=-1) url += `userId=${userId}&`
+        url = url.substring(0, url.length - 1)
+      }
+    return this.http.get(environment.apiUrl + url);
   }
 
 }
